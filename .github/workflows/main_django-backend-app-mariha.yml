@@ -28,8 +28,10 @@ jobs:
           source venv/bin/activate
       
       - name: Install dependencies
-        run: pip install -r requirements.txt
-        
+        run: |
+          cd BACKEND
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
@@ -39,9 +41,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: python-app
-          path: |
-            release.zip
-            !venv/
+          path: ./BACKEND/
 
   deploy:
     runs-on: ubuntu-latest
